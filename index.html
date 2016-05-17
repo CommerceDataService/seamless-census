@@ -1,0 +1,1109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Easy Extracts of US Census Data</title>
+
+    <!-- Javascript -->
+    <script src="https://code.jquery.com/jquery-2.2.2.min.js" integrity="sha256-36cp2Co+/62rEAAYHLmRCPIych47CvdM+uTBJwSzWjI=" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+    <script src="js/parallax.js"></script><!-- Parallax Banner -->
+    <script src="js/navbar.hide.js"></script><!-- Hide Navbar -->
+    <script src="js/scroll.js"></script><!-- Affix Sidebar/Scroll Functions -->
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+    <link href='https://fonts.googleapis.com/css?family=Coda:400,800' rel='stylesheet' type='text/css'><!-- Google Font for Title -->
+    <link rel="stylesheet" type="text/css" href="css/cdup_tutorial.css"><!-- Custom Theme for know.data tutorial -->
+
+    <!-- Syntax Highlighting -->
+    <!-- Support for the following languages: -->
+    <!-- Apache, Bash, C#, C++, CSS, CoffeeScript, Device Tree, Diff, HTML, XML, HTTP, Ini, JSON, Java, JavaScript, Makefile, Markdown, Nginx, Objective-C, PHP, Perl, Python, Ruby, SQL, Fortran, Julia, Lisp, Lua, Mathematica, Matlab, Python-Profile, R, Scilab, Scala, Stata, Swift -->
+    <link rel="stylesheet" type="text/css" href="css/styles/github.css"><!-- Style for highlighting Code: Default to Github -->
+    <script src="js/highlight.pack.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script><!-- Activate Code Highlighting -->
+
+</head>
+<body>
+    <nav id='navbar' class="nav navbar-default navbar-fixed-top navbar-border"><!-- Navbar -->
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#collapse-links" aria-expanded="false">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand navbar-color" href="https://commerce.gov/datausability"><strong>Data Usability</strong></a>
+            </div> <!-- navbar-header -->
+
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="collapse-links">
+                <ul class="nav navbar-nav navbar-color">
+                    <li class="disclaimer"><a href="https://commerce.gov/datausability">a project by Commerce Data Service</a></li>
+                </ul>
+                <ul class="nav navbar-nav navbar-right navbar-color">
+                    <li><a href="https://www.commerce.gov/datausability/">Index</a></li>
+                    <li><a href="http://www.uspto.gov/">USPTO</a></li>
+                </ul>
+            </div><!-- navbar-collapse -->
+        </div><!-- container-fluid -->
+    </nav>
+
+    <!-- Banner -->
+    <section class="scroll">
+        <div class="scroll-overlay ">
+            <div class="title headtext">
+                <h1><span class="title-line" style="font-size:150%;">EASY EXTRACTS OF US CENSUS DATA</span></h1>
+                <h5><span class="title-line">by MATTHEW WIGGINTON CONWAY, CONVEYAL</span></h5>
+                <h5><span class="title-line">edited by STAR YING, COMMERCE DATA SERVICE</span></h5>
+                <h5><span class="title-line">MAY 2016</span></h5>
+            </div>
+        </div>
+    </section>
+
+    <!-- Body -->
+    
+    <section>
+        <div class="container-fluid content">
+            <div class="row">
+                
+                    
+                <div id='' class="hidden-xs hidden-sm col-lg-4 col-md-4">
+                    <a href="https://commerce.gov/dataservice"><img class="footlogo" width="160px"src="img/CDS-horizontal-v2.jpg"/></a>
+                    <a href="http://www.uspto.gov/"><img class="footlogo" height="75px"src="img/conveyal_logo.png"/></a>
+                    
+                </div>
+                <div id='content' class="col-lg-6 col-md-6">
+                    <em>As part of the <a href="https://www.commerce.gov/datausability/">Commerce Data Usability Project</a>, Conveyal has created a tutorial that tiles Census geometries with demographic and economic statistics.  If you have a question, feel free to reach out to the Commerce Data Service at <a href="mailto:DataUsability@doc.gov">DataUsability@doc.gov</a>.</em>
+                </div>
+            </div>
+            <hr>
+            
+            <br>
+            
+            <div class="row">
+                <div id='content' class="col-lg-10 col-md-10"><!-- Content -->
+
+                <section id='intro'>
+                    <h2 class="sectionhead">foreword</h2>
+                    <p>Here at Conveyal, we work with US Census data a lot. Historically, retrieving this data has been a bit difficult, as you have to get the block level geometries from <a href="https://www.census.gov/geo/maps-data/data/tiger-line.html">one place</a>, data on demographics from <a href="http://factfinder.census.gov/faces/nav/jsf/pages/index.xhtml">another</a>, and data on employment from a <a href="http://lehd.ces.census.gov/data/">third</a>. You then have to extract all the files and join them in GIS. It's even more complicated if you hail from an urban area that encompasses multiple states (like the home of Conveyal: Washington, DC). Finally, you have to interpret the column codes to map them to something meaningful for analysis (who knew that <code class="highlighter-rouge">CNS05</code> meant "number of jobs in manufacturing", for example?)</p>
+
+                    <p>How do we streamline this process so that we are not repeating the pre-processing everytime?</p>
+
+                </section>
+
+                <section id="solution">
+                <h2 class="sectionhead">streamlining data</h2>
+                    <p>To solve this problem, we decided to create a seamless data source for US Census data. We retrieved the 11 million block-level geometries for all US states and territories, as well as <a href="http://lehd.ces.census.gov/data/">LODES</a> data for states where it is available. We merged all of these state-level datasets into a single national file, and then split it up into 63,645 Web Mercator tiles at zoom 11, stored on <a href="http://aws.amazon.com/s3">S3</a> in <a href="https://github.com/mapbox/geobuf">GeoBuf</a> format. Each tile includes all blocks whose polygon overlaps that tile. We use our <a href="https://github.com/conveyal/seamless-census">seamless-census</a> tool to perform this processing step. We also gave all those cryptic columns human-readable names; since we're not using shapefiles, column names are not limited to ten characters. Below is a small snippet of the tiles we've rendered for the Washington D.C. metro area.</p>
+
+                    <figure>
+                      <img src="/img/tiles.png" style="width: 100%" />
+                      <figcaption><small>Census blocks in Maryland, Virginia and the District of Columbia, divided up into tiles</small></figcaption>
+                    </figure>
+
+                    <p>Once we've done that, it's relatively easy to extract data for an arbitrary geographic bounding box (even one that crosses state lines). We just select the tiles that overlap the area of interest, download them, and then run the features through a final geographic filter to weed out any overselection. Once we've done that, we can dump the features to a new GeoBuf file. We also wrote a tool to do that, which is also in the <a href="https://github.com/conveyal/seamless-census/">GitHub repository</a>. It's also possible to perform extracts programatically from Java using our library, and it wouldn't be hard to implement the extractor in another language besides Java. Below we show the same region filtered through job density.</p>
+
+                    <figure>
+                      <img src="/img/jobs.png" style="width: 100%"/>
+                      <figcaption><small>Job density in and around Washington, DC, made with a seamless file extract. Note that the file contains parts of three states.</small></figcaption>
+                    </figure>
+
+                </section>
+
+                <section id="pitch">
+                    <h2 class="sectionhead">but it gets better!</h2>
+                    <p>There's no reason why we should keep this to ourselves, either. This is open data and it should be accessible to the world, so we've gone ahead and made the S3 bucket (<code class="highlighter-rouge">lodes-data</code>) where we store the tiles public. It's a requester-pays bucket, so anyone using it pays the (miniscule) S3 bandwidth costs directly to Amazon. Just use the credentials from your AWS account to access it; the bandwidth you use will be added to your AWS bill. The data are the 2015 TIGER/Line blocks for every state, and 2013 LODES data for all segments and job types. Massachusetts, Puerto Rico and the US Virgin Islands have no data available, and Kansas uses the 2011 data (rather than 2013) since newer data is not available. We haven't put demographic data from the decennial census in yet.</p>
+
+                    <p>The format we've devised isn't specific to the US Census, either. We could use exactly the same infrastructure to handle extracts from any large dataset that can be represented as vector data, and then it could be accessed using the same tooling.</p>
+
+                    <p>The extractor is also available as a Java class (see SeamlessSource and its subclasses in the <a href="https://github.com/conveyal/seamless-census">seamless-census</a> repository), so it's easy to integrate with programs written in Java. The extractor is fairly simple, so it shouldn't be difficult to port it to other languages where a geobuf library exists.</p>
+                </section>
+
+                <section id="code">
+                    <h2 class="sectionhead">Getting Started</h2>
+                    <p>Import US Census data into a seamless storage environment. We have developed a <a href="https://github.com/conveyal/seamless-census/blob/master/downloadData.py">python program</a> to download both the TIGER and LODES datasets off U.S. Census servers. We also developed a <a href="https://github.com/conveyal/seamless-census/tree/master/src/main/java">Java package</a> to download, load, store, and extract that TIGER and LODES data.</p>
+
+                    <h2 id="download" class="subsection">download</h2>
+                    <p>Here we create a python program that can pull the desired Census data from their servers resiliently. The first step we do is import the necessary packages for the program:
+                        <ol>
+                            <li>sys: to retrieve the arguments passed via the command line,</li>
+                            <li>urllib: to download a remote file,</li>
+                            <li>zipfile: to work with ZIP archive files,</li>
+                            <li>os: to remove downloaded archives after processing and easy formating of filepaths,</li>
+                            <li>shutil: to copy out the archived files from the ZIP file,</li>
+                            <li>and time: to delay retries on the Census servers to prevent being IP banned.</li>
+                        </ol>
+                    </p>
+
+                    <pre><code class="python">#!/usr/bin/python
+from sys import argv
+from urllib import urlretrieve
+import zipfile
+import os
+import os.path
+from shutil import copyfileobj
+from time import sleep</code></pre>
+
+                    <p>We predefine a dictionary with the appropriate mapping of two character state abbreviations to <a href="https://www.census.gov/geo/reference/ansi_statetables.html">State FIPS codes</a>. Census uses FIPS codes to label the separate state level geography files which are not as human-readable.</p>
+
+                    <pre><code>fipsCodes = dict (
+    AK = "02", # ALASKA
+    AL = "01", # ALABAMA
+    AR = "05", # ARKANSAS
+    AS = "60", # AMERICAN SAMOA
+    AZ = "04", # ARIZONA
+    CA = "06", # CALIFORNIA
+    CO = "08", # COLORADO
+    CT = "09", # CONNECTICUT
+    DC = "11", # DISTRICT OF COLUMBIA
+    DE = "10", # DELAWARE
+    FL = "12", # FLORIDA
+    GA = "13", # GEORGIA
+    GU = "66", # GUAM
+    HI = "15", # HAWAII
+    IA = "19", # IOWA
+    ID = "16", # IDAHO
+    IL = "17", # ILLINOIS
+    IN = "18", # INDIANA
+    KS = "20", # KANSAS
+    KY = "21", # KENTUCKY
+    LA = "22", # LOUISIANA
+    MA = "25", # MASSACHUSETTS
+    MD = "24", # MARYLAND
+    ME = "23", # MAINE
+    MI = "26", # MICHIGAN
+    MN = "27", # MINNESOTA
+    MO = "29", # MISSOURI
+    MS = "28", # MISSISSIPPI
+    MT = "30", # MONTANA
+    NC = "37", # NORTH CAROLINA
+    ND = "38", # NORTH DAKOTA
+    NE = "31", # NEBRASKA
+    NH = "33", # NEW HAMPSHIRE
+    NJ = "34", # NEW JERSEY
+    NM = "35", # NEW MEXICO
+    NV = "32", # NEVADA
+    NY = "36", # NEW YORK
+    OH = "39", # OHIO
+    OK = "40", # OKLAHOMA
+    OR = "41", # OREGON
+    PA = "42", # PENNSYLVANIA
+    PR = "72", # PUERTO RICO
+    RI = "44", # RHODE ISLAND
+    SC = "45", # SOUTH CAROLINA
+    SD = "46", # SOUTH DAKOTA
+    TN = "47", # TENNESSEE
+    TX = "48", # TEXAS
+    UT = "49", # UTAH
+    VA = "51", # VIRGINIA
+    VI = "78", # VIRGIN ISLANDS
+    VT = "50", # VERMONT
+    WA = "53", # WASHINGTON
+    WI = "55", # WISCONSIN
+    WV = "54", # WEST VIRGINIA
+    WY = "56", # WYOMING
+)</code></pre>
+
+                    <p>We now can parse our command-line arguments and create the filepaths we will store the appropriate files.</p>
+
+                    <pre><code># parse arguments
+outDir = argv[1]
+states = [state.upper() for state in argv[2:]]
+
+if len(states) == 1 and states[0] == 'ALL':
+    # download all states
+    print "Downloading all states"
+    states = fipsCodes.keys()
+
+# check inputs
+invalidStates = [state for state in states if not fipsCodes.has_key(state)]
+
+if len(invalidStates) > 0:
+    print "Did not recognize states %s" % ' '.join(invalidStates)
+
+# make the directory structure
+os.makedirs(os.path.join(outDir, 'tiger'))
+os.makedirs(os.path.join(outDir, 'jobs'))
+os.makedirs(os.path.join(outDir, 'workforce'))</code></pre>
+
+                    <p>Now we can define our resilient download function and execute on every state abbreviation passed through the command line argument. </p>
+
+                    <pre><code class="python"># Download the data we need for a particular [set of] states, or the entire country
+# usage: downloadData.py outDir state_abbr [state_abbr . . .]
+# Or use special code 'ALL'
+
+# download resiliently
+def retrieve(url, path):
+    for i in xrange(50):
+        try:
+            urlretrieve(url, path)
+        except:
+            print "error retrieving {0}, retrying".format(url)
+            sleep(5)
+        else:
+            break
+
+
+# download the states
+for state in states:
+    print 'processing %s' % state
+    print 'Downloading TIGER'
+    # get tiger
+    fips = fipsCodes[state]
+    zipout = os.path.join(outDir, "tiger", "{0}.zip".format(state))
+    retrieve("ftp://ftp2.census.gov/geo/tiger/TIGER2010/TABBLOCK/2010/tl_2010_{0}_tabblock10.zip".format(fips), zipout)
+
+    # unzip it
+    # adapted from http://stackoverflow.com/questions/12886768/
+    with zipfile.ZipFile(zipout) as zf:
+        for member in zf.infolist():
+            name = os.path.split(member.filename)[-1]
+            dest = os.path.join(outDir, 'tiger', name)
+            with zf.open(member) as stream:
+                with open(dest, 'w') as out:
+                    copyfileobj(stream, out)
+
+    # we no longer need the zipfile
+    os.remove(zipout)
+
+    print 'Done with TIGER'
+
+    print 'Downloading LODES data'
+
+    # figure out the year of the latest available data
+    # Most states have 2013 data available
+    # see http://lehd.ces.census.gov/data/lodes/LODES7/LODESTechDoc7.1.pdf, page 2f
+    year = 2013
+
+    if state == 'KS':
+        year = 2011
+    elif state == 'MA' or state == 'PR' or state == 'VI':
+        print '{0} does not have LODES data available'.format(state)
+        year = 0
+
+    if year:
+        print "Dowloading {0} LODES data for {1}".format(year, state)
+
+        # get the rac file
+        out = os.path.join(outDir, 'workforce', '{0}_{1}_rac.csv.gz'.format(state, year))
+        retrieve("http://lehd.ces.census.gov/data/lodes/LODES7/{0}/rac/{0}_rac_S000_JT00_{1}.csv.gz".format(state.lower(), year), out)
+
+        # get the wac file
+        out = os.path.join(outDir, 'jobs', '{0}_{1}_wac.csv.gz'.format(state, year))
+        retrieve("http://lehd.ces.census.gov/data/lodes/LODES7/{0}/wac/{0}_wac_S000_JT00_{1}.csv.gz".format(state.lower(), year), out)
+
+    print 'Done with {0}'.format(state)</code></pre>
+
+                    <p>You can use the following <a href="https://raw.githubusercontent.com/conveyal/seamless-census/master/downloadData.py">program</a> to download data from the Census bureau. Create a temporary directory to receive the files before you combine them and load them to S3, in a location that has plenty of disk space. The arguments are the temporary directory and the two-letter postal abbreviations of the states for which you want to retrieve data (you can also use the special code ALL to retrieve data for every state, territory and district). The command below, for instance, would download data for the greater Washington, DC megalopolis.</p>
+
+                    <pre><code class="bash">python downloadData.py temporary_dir DC MD VA WV DE</code></pre>
+
+                    <h2 id="load" class="subsection">load</h2>
+
+                    <p>To begin loading the data we've just downloaded, we first have to create a Geobuf class. This is generated from <a href="https://github.com/mapbox/geobuf">Mapbox's Geobuf format</a> and can be found <a href="https://github.com/conveyal/seamless-census/blob/master/src/main/java/geobuf/Geobuf.java">here</a>. Next we need to define a class to tile and store our Geobuf eventual Geobuf files, either locally or on S3.</p>
+
+                    <pre><code class="java">import com.amazonaws.services.s3.AmazonS3;
+import com.amazonaws.services.s3.AmazonS3Client;
+import com.amazonaws.services.s3.model.ObjectMetadata;
+import com.conveyal.data.geobuf.GeobufEncoder;
+import com.conveyal.data.geobuf.GeobufFeature;
+import com.vividsolutions.jts.geom.Envelope;
+import org.mapdb.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import java.io.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.NavigableSet;
+import java.util.concurrent.*;
+import java.util.function.BiFunction;
+import java.util.zip.GZIPOutputStream;
+
+/**
+ * Store geographic data by ID, with index by zoom-11 tile.
+ */
+public class ShapeDataStore {
+    public static final int ZOOM_LEVEL = 11;
+
+    private static final Logger LOG = LoggerFactory.getLogger(ShapeDataStore.class);
+
+    /** number of decimal places of precision to store */
+    public static final int PRECISION = 12;
+
+    private DB db;
+
+    /**
+     * set of Object[] { int[] { x, y }, Feature } for features at zoom 11
+     */
+    private NavigableSet<Object[]> tiles;
+
+    /**
+     * Map from geoid to feature
+     */
+    private BTreeMap<Long, GeobufFeature> features;
+
+    public ShapeDataStore() {
+        db = DBMaker.tempFileDB().deleteFilesAfterClose().asyncWriteEnable()
+                .transactionDisable()
+                .fileMmapEnable()
+                .asyncWriteEnable()
+                .asyncWriteFlushDelay(1000)
+                .executorEnable()
+                .asyncWriteQueueSize(10000)
+                // start with 1GB
+                .allocateStartSize(1024 * 1024 * 1024)
+                // and bump by 512MB
+                .allocateIncrement(512 * 1024 * 1024)
+                .make();
+
+        features = db.treeMapCreate("features")
+                .keySerializer(BTreeKeySerializer.LONG)
+                .valueSerializer(new GeobufEncoder.GeobufFeatureSerializer(12))
+                .counterEnable()
+                .make();
+
+        tiles = db.treeSetCreate("tiles")
+                .serializer(BTreeKeySerializer.ARRAY3)
+                .make();
+
+        // bind the map by tile
+        features.modificationListenerAdd((id, feat0, feat1) -> {
+            if (feat0 != null)
+                // updates never change geometry, and there are no deletes
+                return;
+
+            // figure out which z11 tiles this is part of
+            Envelope e = feat1.geometry.getEnvelopeInternal();
+            for (int x = lon2tile(e.getMinX(), ZOOM_LEVEL); x <= lon2tile(e.getMaxX(), ZOOM_LEVEL); x++) {
+                for (int y = lat2tile(e.getMaxY(), ZOOM_LEVEL); y <= lat2tile(e.getMinY(), ZOOM_LEVEL); y++) {
+                    tiles.add(new Object[]{x, y, feat1.numericId});
+                }
+            }
+        });
+    }
+
+    public void add(GeobufFeature feature) {
+        if (this.features.containsKey(feature.numericId))
+            throw new IllegalArgumentException("ID " + feature.numericId + " already present in store");
+        this.features.put(feature.numericId, feature);
+
+        if (this.features.size() % 10000 == 0)
+            LOG.info("Loaded {} features", this.features.size());
+    }
+
+    /** Get the longitude of a particular tile */
+    public static int lon2tile (double lon, int zoom) {
+        // recenter
+        lon += 180;
+
+        // scale
+        return (int) (lon * Math.pow(2, zoom) / 360);
+    }
+
+    public void close () {
+        db.close();
+    }
+
+    /** Get the latitude of a particular tile */
+    public static int lat2tile (double lat, int zoom) {
+        // http://wiki.openstreetmap.org/wiki/Slippy_map_tilenames
+        lat = Math.toRadians(lat);
+        lat = Math.log(Math.tan(lat) + 1 / Math.cos(lat));
+
+        return (int) ((1 - lat / Math.PI) / 2 * Math.pow(2, zoom));
+    }
+
+    /** Write GeoBuf tiles to a directory */
+    public void writeTiles (File file) throws IOException {
+        writeTilesInternal((x, y) -> {
+            // write out the features
+            File dir = new File(file, "" + x);
+            File out = new File(dir, y + ".pbf.gz");
+            dir.mkdirs();
+            return new FileOutputStream(out);
+        });
+    }
+
+    /** Write GeoBuf tiles to S3 */
+    public void writeTilesToS3 (String bucketName) throws IOException {
+        // set up an upload thread
+        ExecutorService executor = Executors.newSingleThreadExecutor();
+
+        // initialize an S3 client
+        AmazonS3 s3 = new AmazonS3Client();
+
+        try {
+            writeTilesInternal((x, y) -> {
+                PipedInputStream is = new PipedInputStream();
+                PipedOutputStream os = new PipedOutputStream(is);
+                ObjectMetadata metadata = new ObjectMetadata();
+                metadata.setContentType("application/gzip");
+
+                // perform the upload in its own thread so it doesn't deadlock
+                executor.execute(() -> s3.putObject(bucketName, String.format("%d/%d.pbf.gz", x, y), is, metadata));
+                return os;
+            });
+        } finally {
+            // allow the JVM to exit
+            executor.shutdown();
+            try {
+                executor.awaitTermination(1, TimeUnit.HOURS);
+            } catch (InterruptedException e) {
+                LOG.error("Interrupted while waiting for S3 uploads to finish");
+            }
+        }
+    }
+
+    /**
+     * generic write tiles function, calls function with x and y indices to get an output stream, which it will close itself.
+     * The Internal suffix is because lambdas in java get confused with overloaded functions
+     */
+    private void writeTilesInternal(TileOutputStreamProducer outputStreamForTile) throws IOException {
+        int lastx = -1, lasty = -1, tileCount = 0;
+
+        List<GeobufFeature> featuresThisTile = new ArrayList<>();
+
+        for (Object[] val : tiles) {
+            int x = (Integer) val[0];
+            int y = (Integer) val[1];
+            long id = (Long) val[2];
+
+            if (x != lastx || y != lasty) {
+                if (!featuresThisTile.isEmpty()) {
+                    LOG.debug("x: {}, y: {}, {} features", lastx, lasty, featuresThisTile.size());
+                    GeobufEncoder enc = new GeobufEncoder(new GZIPOutputStream(new BufferedOutputStream(outputStreamForTile.apply(lastx, lasty))), PRECISION);
+                    enc.writeFeatureCollection(featuresThisTile);
+                    enc.close();
+                    featuresThisTile.clear();
+
+                    tileCount++;
+                }
+            }
+
+            featuresThisTile.add(features.get(id));
+
+            lastx = x;
+            lasty = y;
+        }
+
+        LOG.info("Wrote {} tiles", tileCount);
+    }
+
+    /** get a feature */
+    public GeobufFeature get(long id) {
+        // protective copy, don't get entangled in mapdb async serialization.
+        return features.get(id).clone();
+    }
+
+    /** put a feature that already exists */
+    public void put (GeobufFeature feat) {
+        if (!features.containsKey(feat.numericId))
+            throw new IllegalArgumentException("Feature does not exist in database!");
+
+        features.put(feat.numericId, feat);
+    }
+
+    @FunctionalInterface
+    private interface TileOutputStreamProducer {
+        public OutputStream apply (int x, int y) throws IOException;
+    }
+}</code></pre>
+
+                    <p>Once that is done, we define a class that reads TIGER/Line data and converts to the Geobuf format.</p>
+
+                    <pre><code class="java">import com.conveyal.data.geobuf.GeobufFeature;
+import org.geotools.data.FileDataStore;
+import org.geotools.data.FileDataStoreFinder;
+import org.geotools.data.Query;
+import org.geotools.data.simple.SimpleFeatureCollection;
+import org.geotools.data.simple.SimpleFeatureIterator;
+import org.geotools.data.simple.SimpleFeatureSource;
+import org.geotools.referencing.CRS;
+
+import java.io.File;
+import java.util.HashMap;
+
+/**
+ * Reads TIGER/Line data into a MapDB.
+ */
+public class TigerLineSource {
+    private File shapefile;
+
+    public TigerLineSource (File shapefile) {
+        this.shapefile = shapefile;
+    }
+
+    public void load (ShapeDataStore store) throws Exception {
+        FileDataStore fds = FileDataStoreFinder.getDataStore(shapefile);
+        SimpleFeatureSource src = fds.getFeatureSource();
+
+        Query q = new Query();
+        q.setCoordinateSystem(src.getInfo().getCRS());
+        q.setCoordinateSystemReproject(CRS.decode("EPSG:4326", true));
+        SimpleFeatureCollection sfc = src.getFeatures(q);
+
+        for (SimpleFeatureIterator it = sfc.features(); it.hasNext();) {
+            GeobufFeature feat = new GeobufFeature(it.next());
+            feat.id = null;
+            feat.numericId = Long.parseLong((String) feat.properties.get("GEOID10"));
+            feat.properties = new HashMap<>();
+            store.add(feat);
+        }
+    }
+}</code></pre>
+
+                    <p>Now we define a class that converts the LODES data column names into more human-readable headers. This is done through a direct mapping we have done before hand.</p>
+
+                    <pre><code class="java">import com.conveyal.data.geobuf.GeobufFeature;
+import com.csvreader.CsvReader;
+
+import java.io.*;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.zip.GZIPInputStream;
+
+/**
+ * Data source for LODES data.
+ */
+public class LodesSource {
+    private File input;
+    private LodesType type;
+
+    public LodesSource(File input, LodesType type) {
+        this.input = input;
+        this.type = type;
+    }
+
+    public void load(ShapeDataStore store) throws Exception {
+        InputStream csv = new GZIPInputStream(new BufferedInputStream(new FileInputStream(input)));
+        CsvReader reader = new CsvReader(new InputStreamReader(csv));
+
+        // rename the columns to something useful
+        //http://lehd.ces.census.gov/data/lodes/LODES7/LODESTechDoc7.1.pdf#page=7&zoom=auto,-266,580
+        Map<String, String> colNames = new HashMap<>();
+        colNames.put("C000", "total");
+
+        colNames.put("CA01", "age 29 or younger");
+        colNames.put("CA02", "age 30 to 54");
+        colNames.put("CA03", "age 55 or older");
+
+        colNames.put("CE01", "with earnings $1250 per month or less");
+        colNames.put("CE02", "with earnings $1251 - $3333 per month");
+        colNames.put("CE03", "with earnings greater than $3333 per month");
+
+        colNames.put("CNS01", "in agriculture, forestry, fishing and hunting");
+        colNames.put("CNS02", "in mining, quarrying, and oil and gas extraction");
+        colNames.put("CNS03", "in utilities");
+        colNames.put("CNS04", "in construction");
+        colNames.put("CNS05", "in manufacturing");
+        colNames.put("CNS06", "in wholesale trade");
+        colNames.put("CNS07", "in retail trade");
+        colNames.put("CNS08", "in transportation and warehousing");
+        colNames.put("CNS09", "in information");
+        colNames.put("CNS10", "in finance and insurance");
+        colNames.put("CNS11", "in real estate");
+        colNames.put("CNS12", "in professional, scientific and technical services");
+        colNames.put("CNS13", "in management");
+        colNames.put("CNS14", "in administration, support, and waste management");
+        colNames.put("CNS15", "in educational services");
+        colNames.put("CNS16", "in healthcare and social assistance");
+        colNames.put("CNS17", "in arts, entertainment and recreation");
+        colNames.put("CNS18", "in accommodation and food services");
+        colNames.put("CNS19", "in other services, except public administration");
+        colNames.put("CNS20", "in public administration");
+
+        colNames.put("CR01", "with race White alone");
+        colNames.put("CR02", "with race Black or African American alone");
+        colNames.put("CR03", "with race American Indian or Alaska Native alone");
+        colNames.put("CR04", "with race Asian alone");
+        colNames.put("CR05", "with race Native Hawaiian or Other Pacific Islander alone");
+        colNames.put("CR07", "with two or more racial groups");
+
+        colNames.put("CT01", "not Hispanic or Latino");
+        colNames.put("CT02", "Hispanic or Latino");
+
+        colNames.put("CD01", "with less than high school education");
+        colNames.put("CD02", "with high school education, no college");
+        colNames.put("CD03", "with some college education or Associate degree");
+        colNames.put("CD04", "with Bachelor's degree or higher");
+        colNames.put("CS01", "male");
+        colNames.put("CS02", "female");
+
+        // only in workplace characteristics
+        colNames.put("CFA01", "at firms aged 0-1 years");
+        colNames.put("CFA02", "at firms aged 2-3 years");
+        colNames.put("CFA03", "at firms aged 4-5 years");
+        colNames.put("CFA04", "at firms aged 6-10 years");
+        colNames.put("CFA05", "at firms aged 11 or more years");
+
+        colNames.put("CFS01", "at firms with 0-19 employees");
+        colNames.put("CFS02", "at firms with 20-49 employees");
+        colNames.put("CFS03", "at firms with 50-249 employees");
+        colNames.put("CFS04", "at firms with 250-499 employees");
+        colNames.put("CFS05", "at firms with 500 or more employees");
+        colNames.put("createdate", "Data creation date");
+
+        reader.readHeaders();
+        String[] headers = reader.getHeaders();
+
+        // read the file
+        while (reader.readRecord()) {
+            long id = Long.parseLong(reader.get(type == LodesType.WORKPLACE ? "w_geocode" : "h_geocode"));
+            GeobufFeature feat = store.get(id);
+
+            String[] line = reader.getValues();
+            for (int i = 0; i < line.length; i++) {
+                String col = headers[i];
+
+                if (!colNames.containsKey(col))
+                    continue;
+
+                String colName;
+
+                if (type == LodesType.WORKPLACE) {
+                    if (col.startsWith("CR") || col.startsWith("CD") || col.startsWith("CA"))
+                        colName = "Jobs employing workers " + colNames.get(col);
+                    else if (col.startsWith("CS"))
+                        colName = "Jobs employing " + colNames.get(col) + "s";
+                    else if (col.startsWith("CT"))
+                        colName = "Jobs employing " + colNames.get(col) + " workers";
+                    else
+                        colName = "Jobs " + colNames.get(col);
+                }
+                else if (type == LodesType.RESIDENCE) {
+                    if (col.startsWith("CT") || col.startsWith("CS"))
+                        colName = "Workers, " + colNames.get(col);
+                    else
+                        colName = "Workers " + colNames.get(col);
+                }
+                else {
+                    throw new IllegalArgumentException("Invalid LODES type");
+                }
+
+                feat.properties.put(colName, Integer.parseInt(line[i]));
+            }
+
+            store.put(feat);
+        }
+
+        reader.close();
+    }
+
+    /** supported lodes types are workplace area characteristics and residence area characteristics */
+    public static enum LodesType {
+        WORKPLACE, RESIDENCE
+    }
+}</code></pre>
+
+                    <p>Now that we've defined classes to handle both the TIGER shapes and the LODES data, we can define a <code>CensusLoader</code> class that will loop through all the files we've downloaded and:
+                        <ol>
+                            <li>combine the TIGER and LODES data,</li>
+                            <li>convert to Geobuf format,</li>
+                            <li>and finally, write the output either locally or to a S3 bucket.</li>
+                        </ol>
+                    </p>
+
+                    <pre><code class="java">import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import java.io.File;
+import java.util.stream.Stream;
+
+/**
+ * Import data from the US Census into a seamless store in S3 or on disk.
+ */
+public class CensusLoader {
+    protected static final Logger LOG = LoggerFactory.getLogger(CensusLoader.class);
+
+    public static void main (String... args) throws Exception {
+        File indir = new File(args[0]);
+        File tiger = new File(indir, "tiger");
+
+        ShapeDataStore store = new ShapeDataStore();
+
+        // load up the tiger files in parallel
+        LOG.info("Loading TIGER (geometry)");
+        Stream.of(tiger.listFiles())
+            .filter(f -> f.getName().endsWith(".shp"))
+            .forEach(f -> {
+                LOG.info("Loading file {}", f);
+                TigerLineSource src = new TigerLineSource(f);
+                try {
+                    src.load(store);
+                } catch (Exception e) {
+                    throw new RuntimeException(e);
+                }
+            });
+
+        LOG.info("TIGER done");
+
+        LOG.info("Loading LODES workforce data");
+        File workforce = new File(indir, "workforce");
+        Stream.of(workforce.listFiles())
+                .filter(f -> f.getName().endsWith(".csv.gz"))
+                .forEach(f -> {
+                    LOG.info("Loading file {}", f);
+                    try {
+                        new LodesSource(f, LodesSource.LodesType.RESIDENCE).load(store);
+                    } catch (Exception e) {
+                        throw new RuntimeException(e);
+                    }
+                });
+        LOG.info("Workforce done");
+
+        LOG.info("Loading LODES jobs data");
+        File jobs = new File(indir, "jobs");
+        Stream.of(jobs.listFiles())
+                .filter(f -> f.getName().endsWith(".csv.gz"))
+                .forEach(f -> {
+                    LOG.info("Loading file {}", f);
+                    try {
+                        new LodesSource(f, LodesSource.LodesType.WORKPLACE).load(store);
+                    } catch (Exception e) {
+                        throw new RuntimeException(e);
+                    }
+                });
+        LOG.info("Jobs done");
+
+        if (args.length == 1)
+            store.writeTiles(new File(indir, "tiles"));
+        else
+            // write to s3
+            store.writeTilesToS3(args[1]);
+
+        store.close();
+    }
+}</code></pre>
+
+                    <p>Now, use the same temporary directory we used before. If you omit the S3 bucket name, it will place the tiles in the <code>tiles</code> directory in the temporary directory.</p>
+
+                    <pre><code class="bash">JAVA_OPTS=-Xmx[several]G mvn exec:java -Dexec.mainClass="com.conveyal.data.census.CensusLoader" -Dexec.args="temporary_dir s3_bucket_name"</code></pre>
+
+                    <h2 id="store" class="subsection">store</h2>
+                    <p>The processed data is stored in a directory structure, which is kept in Amazon S3. Census data is split up into zoom-level-11 tiles and stored in <a href="https://github.com/mapbox/geobuf">GeoBuf</a> files, each in a directory structure as follows: <code>its source/its x coordinate/its y coordinate</code>. For example, <code>us-census-2012/342/815.pbf</code> might contain US LODES data and decennial census data for southeastern Goleta, CA.</p>
+
+                    <p>Since we include enumeration units that are partially in the tile, enumeration units that can fall into two or more tiles. The end-user must de-duplicate which can be done based on IDs. An enumeration unit that is duplicated across tiles will have the same integer ID in both tiles.</p>
+
+                    <h2 id="extract" class="subsection">extract</h2>
+
+                    <p>Now that we've done all this processing, we can code our extraction process. To start, we define a generic class <code>SeamlessSource</code> that will load a Geobuf tiles and extract the relevant features, either by our specified bounding box or by specific polygon. We will extend this class later to account either for a local database or an S3 bucket.</p>
+
+                    <pre><code class="java">import com.conveyal.data.geobuf.GeobufDecoder;
+import com.conveyal.data.geobuf.GeobufFeature;
+import com.vividsolutions.jts.geom.*;
+import com.vividsolutions.jts.geom.prep.PreparedPolygon;
+import com.vividsolutions.jts.util.GeometricShapeFactory;
+import org.mapdb.DBMaker;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import java.io.BufferedInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.zip.GZIPInputStream;
+
+import static com.conveyal.data.census.ShapeDataStore.lat2tile;
+import static com.conveyal.data.census.ShapeDataStore.lon2tile;
+
+/**
+ * A tile source for seamless Census extracts
+ */
+public abstract class SeamlessSource {
+    // convenience
+    private static final int ZOOM_LEVEL = ShapeDataStore.ZOOM_LEVEL;
+
+    protected static final Logger LOG = LoggerFactory.getLogger(SeamlessSource.class);
+
+    private static final GeometryFactory geometryFactory = new GeometryFactory();
+
+    /** Extract features by bounding box */
+    public Map<Long, GeobufFeature> extract(double north, double east, double south, double west, boolean onDisk) throws
+            IOException {
+        GeometricShapeFactory factory = new GeometricShapeFactory(geometryFactory);
+        factory.setCentre(new Coordinate((east + west) / 2, (north + south) / 2));
+        factory.setWidth(east - west);
+        factory.setHeight(north - south);
+        Polygon rect = factory.createRectangle();
+        return extract(rect, onDisk);
+    }
+
+    /** Extract features by arbitrary polygons */
+    public Map<Long, GeobufFeature> extract(Geometry bounds, boolean onDisk) throws IOException {
+        Map<Long, GeobufFeature> ret;
+
+        if (onDisk)
+            ret = DBMaker.tempTreeMap();
+        else
+            ret = new HashMap<>();
+
+        Envelope env = bounds.getEnvelopeInternal();
+        double west = env.getMinX(), east = env.getMaxX(), north = env.getMaxY(), south = env.getMinY();
+
+        // TODO: use prepared polygons
+
+        // figure out how many tiles we're requesting
+        int minX = lon2tile(west, ZOOM_LEVEL), maxX = lon2tile(east, ZOOM_LEVEL),
+                minY = lat2tile(north, ZOOM_LEVEL), maxY = lat2tile(south, ZOOM_LEVEL);
+
+        int tcount = (maxX - minX + 1) * (maxY - minY + 1);
+
+        LOG.info("Requesting {} tiles", tcount);
+
+        int fcount = 0;
+
+        // read all the relevant tiles
+        for (int x = minX; x <= maxX; x++) {
+            for (int y = minY; y <= maxY; y++) {
+                InputStream is = getInputStream(x, y);
+
+                if (is == null)
+                    // no data in this tile
+                    continue;
+
+                // decoder closes input stream as soon as it has read the tile
+                GeobufDecoder decoder = new GeobufDecoder(new GZIPInputStream(new BufferedInputStream(is)));
+
+                while (decoder.hasNext()) {
+                    GeobufFeature f = decoder.next();
+                    // blocks are duplicated at the edges of tiles, no need to import twice
+                    if (ret.containsKey(f.numericId))
+                        continue;
+
+                    if (!bounds.disjoint(f.geometry)) {
+                        ret.put(f.numericId, f);
+                        fcount++;
+
+                        if (fcount % 1000 == 0)
+                            LOG.info("Read {} features", fcount);
+                    }
+                }
+            }
+        }
+
+        return ret;
+    }
+
+    /** get an input stream for the given tile */
+    protected abstract InputStream getInputStream(int x, int y) throws IOException;
+}</code></pre>
+
+                    <p>Here we extend our previous generic <code>SeamlessSource</code> to account for the the case we stored our processed files locally.</p>
+
+                    <pre><code class="java">import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+
+/**
+ * Seamless source for the file system.
+ */
+public class FileSeamlessSource extends SeamlessSource {
+    private File directory;
+
+    public FileSeamlessSource(String path) {
+        this.directory = new File(path);
+    }
+
+    @Override protected InputStream getInputStream(int x, int y) throws IOException {
+        File dir = new File(directory, x + "");
+        File file = new File(dir, y + ".pbf.gz");
+
+        if (!file.exists())
+            return null;
+
+        return new FileInputStream(file);
+    }
+}</code></pre>
+
+                    <p>Below, in this case, we extend <code>SeamlessSource</code> to account for retrieving from an S3 bucket.</p>
+
+                    <pre><code class="java">import com.amazonaws.services.s3.AmazonS3;
+import com.amazonaws.services.s3.AmazonS3Client;
+import com.amazonaws.services.s3.model.AmazonS3Exception;
+
+import java.io.IOException;
+import java.io.InputStream;
+
+/**
+ * A seamless data source based on storage in Amazon S3.
+ */
+public class S3SeamlessSource extends SeamlessSource {
+    private static AmazonS3 s3 = new AmazonS3Client();
+
+    public final String bucketName;
+
+    public S3SeamlessSource(String bucketName) {
+        this.bucketName = bucketName;
+    }
+
+    @Override
+    protected InputStream getInputStream(int x, int y) throws IOException {
+        try {
+            return s3.getObject(bucketName, String.format("%d/%d.pbf.gz", x, y)).getObjectContent();
+        } catch (AmazonS3Exception e) {
+            // there is no data in this tile
+            if ("NoSuchKey".equals(e.getErrorCode()))
+                return null;
+            else
+                // re-throw, something else is amiss
+                throw e;
+        }
+    }
+}</code></pre>
+
+                    <p>And finally we defining an overarching class that extract our desired features either locally or from S3.</p>
+
+                    <pre><code class="java">import com.conveyal.data.geobuf.GeobufEncoder;
+import com.conveyal.data.geobuf.GeobufFeature;
+import com.conveyal.geojson.GeoJsonModule;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.vividsolutions.jts.geom.Geometry;
+import com.vividsolutions.jts.geom.GeometryCollection;
+import com.vividsolutions.jts.geom.GeometryFactory;
+import com.vividsolutions.jts.geom.Polygon;
+
+import java.io.*;
+import java.util.List;
+import java.util.Map;
+
+/**
+ * Extract Census data from a seamless datastore.
+ */
+public class CensusExtractor {
+    /**
+     * The precision to use for output files.
+     * Set above 6 at your own risk; higher precision files work fine with the reference implementation and with geobuf-java,
+     * but break with pygeobuf (see https://github.com/mapbox/pygeobuf/issues/21)
+     */
+    private static final int PRECISION = 6;
+
+    public static void main (String... args) throws IOException {
+        if (args.length < 3 || args.length > 6) {
+            System.err.println("usage: CensusExtractor (s3://bucket|data_dir) n e s w [outfile.json]");
+            System.err.println("   or: CensusExtractor (s3://bucket|data_dir) boundary.geojson [outfile.json]");
+            return;
+        }
+
+        SeamlessSource source;
+        if (!args[0].startsWith("s3://"))
+            source = new FileSeamlessSource(args[0]);
+        else
+            source = new S3SeamlessSource(args[0].substring(5));
+
+        long start = System.currentTimeMillis();
+
+        Map<Long, GeobufFeature> features;
+
+        if (args.length >= 4) {
+            features = source.extract(Double.parseDouble(args[1]),
+                    Double.parseDouble(args[2]),
+                    Double.parseDouble(args[3]),
+                    Double.parseDouble(args[4]),
+                    false
+            );
+        }
+        else {
+            // read geojson boundary
+            ObjectMapper om = new ObjectMapper();
+            om.registerModule(new GeoJsonModule());
+            FileInputStream fis = new FileInputStream(new File(args[1]));
+            FeatureCollection fc = om.readValue(fis, FeatureCollection.class);
+            fis.close();
+
+            features = source.extract(fc.features.get(0).geometry, false);
+        }
+
+        OutputStream out;
+
+        long completeTime = System.currentTimeMillis() - start;
+        System.err.println("Read " + features.size() + " features in " + completeTime + "msec");
+
+        if (args.length == 6)
+            out = new FileOutputStream(new File(args[5]));
+        else if (args.length == 3)
+            out = new FileOutputStream(new File(args[2]));
+        else
+            out = System.out;
+
+        GeobufEncoder encoder = new GeobufEncoder(out, PRECISION);
+        encoder.writeFeatureCollection(features.values());
+        encoder.close();
+
+        if (out instanceof FileOutputStream)
+            out.close();
+    }
+
+    // rudimentary geojson classes to deserialize feature collection
+
+    public static class FeatureCollection {
+        public String type;
+        public Map<String, Object> crs;
+        public List<Feature> features;
+    }
+
+    public static class Feature {
+        public String type;
+        public Map<String, Object> properties;
+        public Geometry geometry;
+    }
+}</code></pre>
+
+                    <p>Now for the fun part. The following command will extract the data stored in the S3 bucket specified, using the bounding box specified, to the geobuf file out.pbf.</p>
+
+                    <pre><code class="bash">JAVA_OPTS=-Xmx[several]G mvn exec:java -Dexec.mainClass="com.conveyal.data.census.CensusExtractor" -Dexec.args="s3://bucket_name n e s w out.pbf"</code></pre>
+
+                </section>
+                
+                </div><!-- Content -->
+                  
+                <div id='sidebar' class="hidden-xs hidden-sm col-lg-2 col-md-2"><!-- Sidebar -->
+                       
+                    <ul id='featured-nav' class="nav nav-list featured-nav nav-stacked">
+                      
+                        
+                        <li>
+                            <ul class="fa-style"><!-- Font Awesome -->
+                               <!-- <li><a href="https://github.com/CommerceDataService/tutorial_ms_powerbi"><i class="fa fa-file-archive-o fa-lg"></i></a></li>
+                                <li><a href="https://github.com/CommerceDataService/tutorial_ms_powerbi"><i class="fa fa-file-code-o fa-lg"></i></a></li>
+                                <li><a href="https://github.com/CommerceDataService/tutorial_ms_powerbi"><i class="fa fa-github-square fa-lg"></i></a></li>-->
+                            </ul>
+                        </li>
+                        <li>
+                            
+                        </li>
+                        <li>
+                            <ul class="fa-style"><!-- Font Awesome -->
+                                <!--<li><a href="https://github.com/CommerceDataService/tutorial_ms_powerbi"><i class="fa fa-file-archive-o fa-lg"></i></a></li>
+                                <li><a href="https://github.com/CommerceDataService/tutorial_ms_powerbi"><i class="fa fa-file-code-o fa-lg"></i></a></li>
+                                <li><a href="https://github.com/CommerceDataService/tutorial_ms_powerbi" title="Github Repo for MS Power BI Part 1"><i class="fa fa-github-square fa-lg"></i></a></li>-->
+                            </ul>
+                        </li>
+                        <li>
+                            <ul class="fa-style"><!-- Font Awesome -->
+                                <li><a href="https://github.com/CommerceDataService/tutorial_pto" title="Github Repo for USPTO Tutorial"><i class="fa fa-github-square fa-lg"></i></a></li>
+                                <li><a href="tutorial_pto.ipynb"  title="Jupyter Notebook of Getting Started"><i class="fa fa-file-code-o fa-lg"></i></a></li>
+                                <li><a href="https://twitter.com/uspto" title="Twitter handle for USPTO"><i class="fa fa-twitter-square fa-lg"></i></a></li><!-- Haven't added the SNS components -->
+                                <!--<li><a href=""><i class="fa fa-linkedin-square fa-lg"></i></a></li>
+                                <li><a href=""><i class="fa fa-facebook-square fa-lg"></i></a></li>-->
+                            </ul>
+                        </li>
+                        <li><a href="#intro">FOREWORD</a></li>
+                        <li><a href="#solution">STREAMLINING DATA</a></li>
+                        <li><a href="#pitch">IT GETS BETTER</a></li>                        
+                        <li><a href="#code">GETTING STARTED</a></li>                        
+                        <li><a href="#download">&nbsp;&nbsp;&nbsp;&nbsp;DOWNLOAD</a></li>                        
+                        <li><a href="#load">&nbsp;&nbsp;&nbsp;&nbsp;LOAD</a></li>                        
+                        <li><a href="#store">&nbsp;&nbsp;&nbsp;&nbsp;STORE</a></li>                        
+                        <li><a href="#extract">&nbsp;&nbsp;&nbsp;&nbsp;EXTRACT</a></li>                        
+                    </ul>
+                </div><!-- Sidebar -->
+            </div><!-- Row -->
+        </div><!-- Container-fluid -->
+    </div>
+
+</body>
+</html>
